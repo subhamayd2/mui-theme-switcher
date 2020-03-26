@@ -12,20 +12,55 @@ npm install --save mui-theme-switcher
 
 ## Usage
 
+### In App root (example: `index.js`)
+
 ```tsx
-import * as React from 'react'
+const lightTheme = createMuiTheme();
+const darkTheme = createMuiTheme({
+  palette: {
+    type: "dark"
+  }
+});
 
-import { useMyHook } from 'mui-theme-switcher'
-
-const Example = () => {
-  const example = useMyHook()
-  return (
-    <div>
-      {example}
-    </div>
-  )
-}
+ReactDOM.render(
+  <ThemeSwitcherProvider
+    lightTheme={lightTheme}
+    darkTheme={darkTheme}
+    defaultTheme="dark"
+  >
+    <App />
+  </ThemeSwitcherProvider>,
+  document.getElementById("root")
+);
 ```
+
+### In your component (example: `App.js`)
+
+```tsx
+const App = () => {
+  const { dark, toggleDark } = useThemeSwitcher();
+  return (
+    <Paper>
+      <Typography variant="h5">
+        Let there be {dark ? "darkness" : "light"}
+      </Typography>
+      <Button onClick={toggleDark}>Toggle Theme</Button>
+    </Paper>
+  );
+};
+```
+
+## Props
+
+| Prop         | Type                                     | Description                                                                                  |
+| ------------ | ---------------------------------------- | -------------------------------------------------------------------------------------------- |
+| children     | `node`                                   | The app which will be themed                                                                 |
+| darkTheme    | `Theme`                                  | Dark variant of the theme. _`Theme`_ object created using `@material-ui`'s `createMuiTheme`  |
+| lightTheme   | `Theme`                                  | Light variant of the theme. _`Theme`_ object created using `@material-ui`'s `createMuiTheme` |
+| followSystem | `boolean` (default `false`)              | Whether the App should follow system/browser theme.                                          |
+| persist      | `boolean` (default `false`)              | Whether the App should save the theme locally                                                |
+| appId        | `string` (_Required_ if using `persist`) | Unique ID of the App.                                                                        |
+| defaultTheme | enum `"dark" | "light"`                  | Default theme of the App                                                                     |
 
 ## License
 
