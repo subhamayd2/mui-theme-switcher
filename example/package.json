@@ -1,0 +1,26 @@
+{
+  "name": "mui-theme-switcher-example",
+  "homepage": "https://.github.io/mui-theme-switcher",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "file:../node_modules/react",
+    "@material-ui/core": "file:../node_modules/@material-ui/core",
+    "react-dom": "^16.9.0",
+    "react-scripts": "ile:../node_modules/react-scripts",
+    "mui-theme-switcher": "file:.."
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
