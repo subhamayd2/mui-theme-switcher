@@ -1,2 +1,2 @@
-export const DARK: String = "dark";
-export const LIGHT: String = "light";
+export const DARK: string = "dark";
+export const LIGHT: string = "light";

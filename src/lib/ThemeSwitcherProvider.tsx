@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
-import { MuiThemeProvider, Theme } from "@material-ui/core";
+import { MuiThemeProvider, Theme, withStyles } from "@material-ui/core";
 import { Provider } from "./Context";
-import { DARK } from "./utils/constants";
+import { DARK, LIGHT } from "./utils/constants";
 
 export interface ThemeSwitcherProviderProps {
+  classes: any;
   children: React.ReactElement;
   darkTheme: Theme;
   lightTheme: Theme;
@@ -12,21 +13,30 @@ export interface ThemeSwitcherProviderProps {
   persist?: boolean;
   appId?: string;
   defaultTheme: "dark" | "light";
+  smoothTransition?: boolean;
 }
 
 const ThemeSwitcherProvider = ({
+  classes: { wrapper },
   children,
   darkTheme,
   lightTheme,
   followSystem,
   persist,
   appId,
-  defaultTheme
+  defaultTheme,
+  smoothTransition
 }: ThemeSwitcherProviderProps) => {
   const [dark, setDark] = useState(false);
 
   const toggleTheme = useCallback(() => {
-    setDark(prevState => !prevState);
+    setDark(prevState => {
+      const current = !prevState;
+      if (persist && appId) {
+        localStorage.setItem(appId, current ? DARK : LIGHT);
+      }
+      return current;
+    });
   }, []);
 
   useEffect(() => {
@@ -38,9 +48,9 @@ const ThemeSwitcherProvider = ({
       isDark = localTheme === DARK;
     } else {
       if (persist && [undefined, null, ""].includes(appId)) {
-        console.warn(
+        console.error(
           "ThemeSwitcherProvider",
-          "'persist' is useless without 'appId'"
+          "'persist' is useless without 'appId'. Consider providing a unique 'appId' for your app."
         );
       }
       if (followSystem) {
@@ -49,6 +59,7 @@ const ThemeSwitcherProvider = ({
     }
     setDark(isDark);
   }, []);
+
   return (
     <Provider
       value={{
@@ -57,14 +68,30 @@ const ThemeSwitcherProvider = ({
       }}
     >
       <MuiThemeProvider theme={dark ? darkTheme : lightTheme}>
-        {children}
+        {smoothTransition ? (
+          <div className={wrapper}>{children}</div>
+        ) : (
+          children
+        )}
       </MuiThemeProvider>
     </Provider>
   );
 };
 
+const styles = () => ({
+  wrapper: {
+    "& *": {
+      transition: "background 200ms"
+    }
+  }
+});
+
 ThemeSwitcherProvider.propTypes = {
   children: PropTypes.element.isRequired
 };
 
-export default ThemeSwitcherProvider;
+ThemeSwitcherProvider.defaultProps = {
+  smoothTransition: true
+};
+
+export default withStyles(styles, { withTheme: false })(ThemeSwitcherProvider);

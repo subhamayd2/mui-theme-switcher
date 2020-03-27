@@ -2,7 +2,7 @@ import React from "react";
 import { Paper, Button, withStyles, Typography } from "@material-ui/core";
 import { useThemeSwitcher } from "mui-theme-switcher";
 
-const App = ({ classes: { paperStyles } }) => {
+const AppWithHook = ({ classes: { paperStyles } }) => {
   const { dark, toggleDark } = useThemeSwitcher();
   return (
     <Paper className={paperStyles}>
@@ -23,9 +23,8 @@ const styles = () => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 0,
-    transition: "all 500ms"
+    borderRadius: 0
   }
 });
 
-export default withStyles(styles)(App);
+export default withStyles(styles)(AppWithHook);

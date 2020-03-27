@@ -8,7 +8,7 @@
     "react": "file:../node_modules/react",
     "@material-ui/core": "file:../node_modules/@material-ui/core",
     "react-dom": "^16.9.0",
-    "react-scripts": "ile:../node_modules/react-scripts",
+    "react-scripts": "file:../node_modules/react-scripts",
     "mui-theme-switcher": "file:.."
   },
   "scripts": {

@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import AppWithHook from "./AppWithHook";
+// import AppWithHOC from "./AppWithHOC";
 import { ThemeSwitcherProvider } from "mui-theme-switcher";
 import { createMuiTheme } from "@material-ui/core";
 
@@ -17,8 +18,9 @@ ReactDOM.render(
     lightTheme={lightTheme}
     darkTheme={darkTheme}
     defaultTheme="dark"
+    followSystem
   >
-    <App />
+    <AppWithHook />
   </ThemeSwitcherProvider>,
   document.getElementById("root")
 );
